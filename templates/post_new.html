@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+
+    <title>Post Detail</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+{#    IF USER IS LOGGED IN#}
+{% comment %}    {% if user.is_authenticated %}
+    <h1>New Post</h1>
+    <form action="" method="POST">{% csrf_token %}
+        <p>{{ form.address }}</p>
+        {{ form.as_p }}
+        <input type="submit" value="submit address">
+    </form>
+
+    <div id='map' style='width: 50%; height: 50%;'></div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZXlhbnllaHlhIiwiYSI6ImNrcm5uem9kOTB5cW0yc252M3AxN2drNzMifQ.IIwBFoL3ox2l3rOwsvZe_w';
+
+        var map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [35.495480, 33.888630], // starting position [lng, lat]
+            zoom: 7.4 // starting zoom
+        });
+
+        {% for address in addresses %}
+            var marker = new mapboxgl.Marker()
+                .setLngLat([{{ address.long }}, {{ address.lat }}])
+                .setPopup(new mapboxgl.Popup().setHTML("<h1>{{ address.username }}</h1>"))
+                .addTo(map);
+        {% endfor %}
+
+        {#IF USER IS NOT LOGGED IN#}
+    {% else %}
+        <h1>You are not Logged in. Create an account to start posting</h1>
+        <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+
+
+
+
+    </script>{% endcomment %}
+<form method="post">
+        {% csrf_token %}
+
+        <div class="form">
+            <div class="title">Welcome</div>
+            <div class="subtitle">Let's create your account!</div>
+            <div class="input-container ic1">
+                <input id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" class="input" type="text" placeholder=" " value="{{ form.username.value|default_if_none:"" }}"/>
+                <div class="cut"></div>
+                <label for="{{ form.username.id_for_label }}" class="placeholder">Medecine Name</label>
+            </div>
+            <div class="input-container ic2">
+                <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.html_name }}" class="input" type="text" placeholder=" " value="{{ form.password1.value|default_if_none:"" }}"/>
+                <div class="cut" onfocus="geolocate()"></div>
+                <label for="{{ form.password1.id_for_label }}" class="placeholder">City</label>
+            </div>
+            <div class="input-container ic2">
+                <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.html_name }}" class="input" type="date" placeholder=" " value="{{ form.password2.value|default_if_none:"" }}"/>
+                <div class="cut"></div>
+                <label for="{{ form.password2.id_for_label }}" class="placeholder">Expiry Date</label>
+            </div>
+            {% comment %}<div class="input-container ic2">
+                <input id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" class="input" type="email" placeholder=" " value="{{ form.email.value|default_if_none:"" }}"/>
+                <div class="cut cut-short"></div>
+                <label for="{{ form.email.id_for_label }}" class="placeholder">Email</label>
+            </div>{% endcomment %}
+            <button type="submit" class="submit">Post</button>
+        </div>
+
+    </form>
+
+
+    {#    {% for address in addresses %}#}
+    {#        <h1>{{ address.lat }}</h1>#}
+    {#        <h1>{{ address.long }}</h1>#}
+    {#    {% endfor %}#}
+
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <!--  Meta  -->
+    <meta charset="UTF-8" />
+    <title>Smooth navigation</title>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+
+    <!--  Styles  -->
+
+    {#    CSS LINK FOR THE HOME #}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@800;900&display=swap" rel="stylesheet">
+
+    {#    CSS LINK FOR LIST OF POSTS#}
+    <link href="{% static 'css/medicine_list.css' %}" rel="stylesheet">
+
+    {#    CSS LINK FOR SEARCH BAR#}
+    <link href="{% static 'css/search_bar.css' %}" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="{% static 'css/signup.css' %}" rel="stylesheet">
+
+    {#    CSS LINK AND BOOTSTRAP FOR THE NAVBAR#}
+
+    <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+<header class="main-header">
+    <div class="container">
+        <nav id="navbar" class="navbar navbar-expand-lg main-nav px-0">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="http://rajeshdas.com/assets/images/logo.svg" alt="rajeshdas.com">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar icon-bar-1"></span>
+                <span class="icon-bar icon-bar-2"></span>
+                <span class="icon-bar icon-bar-3"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul id="list_of_links" class="navbar-nav ml-auto text-uppercase f1">
+                    <li>
+                        <a href="{% url 'home' %}" class="active active-first">home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'about' %}">about us</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'post_new' %}">New Post</a>
+                    </li>
+                    {#IF USER IS LOGGED IN#}
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                        {#IF USER IS NOT LOGGED IN#}
+                    {% else %}
+                        <li>
+                            <a href="{% url 'signup' %}">Sign Up</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'login' %}">Log In</a>
+                        </li>
+                    {% endif %}
+{#                    SEARCH BAR#}
+                    <li>
+                        <div id="search_bar" class="input-group mb-5">
+                            <form action="{% url 'search_results' %}" method="get">
+                                <label>
+                                    <input name="q" placeholder="Search For Medicine" type="text" class="form-control">
+                                </label>
+                                <button id="search_button" type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </form>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- /.container -->
+</header>
+<!--
+
+  Wow! What do you want to build?
+
+  You have so many possibilities right now... Looking for something to kick off?
+  How about a simple folio page to show off everything you're going to make!
+
+-->
+
+<!-- Bootstrap core JavaScript
+  ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Scripts -->
+<script src="scripts/index.js"></script>
+
+
+{#    <header>#}
+{#        <div class="nav-left">#}
+{#          <h1><a href="{% url 'home' %}">Django blog</a></h1>#}
+{#        </div>#}
+{#        <div class="nav-right">#}
+{#          <a href="{% url 'post_new' %}">+ New Blog Post</a>#}
+{#        </div>#}
+{#      </header>#}
+
+{#    {% if user.is_authenticated %}#}
+{#        <p>Hi {{ user.username }}</p>#}
+{#        <p><a href="{% url 'logout' %}">Log Out</a></p>#}
+{#    {% else %}#}
+{#        <p>You are not logged in.</p>#}
+{#        <a href="{% url 'login' %}">Log In</a>#}
+{#    {% endif %}#}
+
+
+
+
+{% block content %}
+{% endblock content %}
+
+</body>
+
+</html>
